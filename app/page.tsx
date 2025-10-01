@@ -5,7 +5,8 @@ import { FeaturesBentoGrid } from "./_components/FeaturesBentoGrid";
 import { UserButton, useUser } from "@clerk/nextjs";
 import { div } from "motion/react-m";
 import { Button } from "@/components/ui/button";
-import Link  from "next/link";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   return (
@@ -53,28 +54,29 @@ export default function Home() {
           }}
           className="relative z-10 mx-auto max-w-xl py-4 text-center text-lg font-normal text-neutral-600 dark:text-neutral-400"
         >
-          Deliver instant, accurate medical assistance through natural voice conversations.
-          Automate appointment, scheduling, symptom triage and follow up care 24/7
+          Deliver instant, accurate medical assistance through natural voice
+          conversations. Automate appointment, scheduling, symptom triage and
+          follow up care 24/7
         </motion.p>
-          <Link href={"/sign-in"}>
-            <motion.div
-              initial={{
-                opacity: 0,
-              }}
-              animate={{
-                opacity: 1,
-              }}
-              transition={{
-                duration: 0.3,
-                delay: 1,
-              }}
-              className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
-            >
-              <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-                Get Started
-              </button>
-            </motion.div>
-          </Link>
+        <Link href={"/sign-in"}>
+          <motion.div
+            initial={{
+              opacity: 0,
+            }}
+            animate={{
+              opacity: 1,
+            }}
+            transition={{
+              duration: 0.3,
+              delay: 1,
+            }}
+            className="relative z-10 mt-8 flex flex-wrap items-center justify-center gap-4"
+          >
+            <button className="w-60 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+              Get Started
+            </button>
+          </motion.div>
+        </Link>
         <motion.div
           initial={{
             opacity: 0,
@@ -108,24 +110,30 @@ export default function Home() {
 
 const Navbar = () => {
   const user = useUser();
+  const router = useRouter();
+
+  const handleDashboardClick = () => {
+    router.push("/dashboard");
+  };
+
   return (
     <nav className="flex w-full items-center justify-between border-t border-b border-neutral-200 px-4 py-4 dark:border-neutral-800">
       <div className="flex items-center gap-2">
         <div className="size-7 rounded-full bg-gradient-to-br from-violet-500 to-pink-500" />
         <h1 className="text-base font-bold md:text-2xl">Aceternity UI</h1>
       </div>
-      {!user ? 
-      <Link href="/sign-in">
-        <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
-          Login
-        </button>
-      </Link> : 
+      {!user ? (
+        <Link href="/sign-in">
+          <button className="w-24 transform rounded-lg bg-black px-6 py-2 font-medium text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-gray-800 md:w-32 dark:bg-white dark:text-black dark:hover:bg-gray-200">
+            Login
+          </button>
+        </Link>
+      ) : (
         <div className="flex gap-5 items-center">
           <UserButton />
-          <Button>Dashboard</Button>
+          <Button onClick={handleDashboardClick}>Dashboard</Button>
         </div>
-    }
+      )}
     </nav>
   );
 };
-
