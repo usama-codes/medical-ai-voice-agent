@@ -6,7 +6,7 @@ import { IconArrowRight } from "@tabler/icons-react";
 import { Crown, Loader2Icon } from "lucide-react";
 import { useAuth } from "@clerk/nextjs";
 import axios from "axios";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 
 export type doctorAgent = {
   id: number;
