@@ -6,6 +6,7 @@ import { menu } from "motion/react-m";
 import { UserButton } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import Logo from "@/components/Logo";
 
 const menuOptions = [
   {
@@ -34,19 +35,9 @@ function AppHeader() {
   const router = useRouter();
 
   return (
-    <div className="flex items-center justify-between p-4 shadow px-10 md:px-20 lg:px-40">
+    <div className="flex items-center justify-between p-4 px-10 md:px-20 lg:px-40">
       <Link href="/dashboard">
-        <Image
-          src="/logo.svg"
-          alt="Logo"
-          width={100}
-          height={100}
-          style={{
-            width: "auto",
-            height: "auto",
-          }}
-          className="cursor-pointer"
-        />
+        <Logo textSize="lg" className="cursor-pointer" />
       </Link>
       <div className="hidden md:flex gap-13 items-center">
         {menuOptions.map((option, index) => (
