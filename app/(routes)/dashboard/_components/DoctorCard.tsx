@@ -37,10 +37,10 @@ function DoctorCard({ doctorAgent }: props) {
       selectedDoctor: doctorAgent,
     });
 
-    console.log(result.data);
+    // console.log(result.data);
 
     if (result.data?.sessionId) {
-      console.log("Session started with ID:", result.data.sessionId);
+      // console.log("Session started with ID:", result.data.sessionId);
 
       // Navigate to the medical agent page with the sessionId
       router.push(`/dashboard/medical-agent/${result.data.sessionId}`);
@@ -48,33 +48,65 @@ function DoctorCard({ doctorAgent }: props) {
     setLoading(false);
   };
 
-
   return (
-    <div className="overflow-hidden lg ml-15 relative">
+    <article
+      className="group relative overflow-hidden rounded-2xl border border-border/50 bg-card/50 backdrop-blur-sm shadow-lg transition-all duration-500 hover:shadow-2xl hover:shadow-primary/10 hover:-translate-y-2 hover:border-primary/30"
+      aria-label={`Doctor consultation card for ${doctorAgent.specialist}`}
+    >
       {doctorAgent?.subscriptionRequired && (
-        <div className="absolute m-2 right-0 bg-gradient-to-r from-yellow-300 to-yellow-400 p-1.5 rounded-full shadow-lg">
-          <Crown className="h-5 w-5 text-white" />
+        <div
+          className="absolute top-3 right-3 z-10 bg-gradient-to-br from-amber-400 to-yellow-500 p-2 rounded-full shadow-lg ring-2 ring-yellow-300/50 animate-pulse"
+          aria-label="Premium feature"
+          title="Premium feature - subscription required"
+        >
+          <Crown className="h-5 w-5 text-white drop-shadow" />
         </div>
       )}
-      <Image
-        src={doctorAgent.image}
-        alt={doctorAgent.specialist}
-        width={200}
-        height={200}
-        className="w-full h-[250px] object-cover rounded-xl"
-      />
-      <h2 className="font-bold text-lg mt-2">{doctorAgent.specialist}</h2>
-      <p className="line-clamp-2 mt-1 text-sm text-gray-500">
-        {doctorAgent.description}
-      </p>
-      <Button
-        className="w-full mt-2"
-        disabled={!paidUser && doctorAgent?.subscriptionRequired}
-        onClick={onStartConsultation}
-      >
-        Consult {loading ? <Loader2Icon className="animate-spin" /> : <IconArrowRight />}
-      </Button>
-    </div>
+      <div className="relative overflow-hidden">
+        <Image
+          src={doctorAgent.image}
+          alt={`${doctorAgent.specialist} consultation`}
+          width={200}
+          height={200}
+          className="w-full h-[250px] object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        {/* Shine effect */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+      </div>
+      <div className="p-5 space-y-4">
+        <div>
+          <h2 className="font-bold text-xl mb-2 text-foreground group-hover:text-primary transition-colors duration-300">
+            {doctorAgent.specialist}
+          </h2>
+          <p className="line-clamp-2 text-sm text-muted-foreground leading-relaxed">
+            {doctorAgent.description}
+          </p>
+        </div>
+        <Button
+          className="w-full shadow-md hover:shadow-lg hover:shadow-primary/20 transition-all duration-300 group/btn relative overflow-hidden"
+          disabled={!paidUser && doctorAgent?.subscriptionRequired}
+          onClick={onStartConsultation}
+          aria-label={`Start consultation with ${doctorAgent.specialist}`}
+        >
+          {loading ? (
+            <>
+              <Loader2Icon className="animate-spin mr-2" aria-hidden="true" />
+              <span>Starting...</span>
+            </>
+          ) : (
+            <>
+              <span className="relative z-10">Consult Now</span>
+              <IconArrowRight
+                className="ml-2 transition-transform group-hover/btn:translate-x-1 relative z-10"
+                aria-hidden="true"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/10 to-white/0 translate-x-[-100%] group-hover/btn:translate-x-[100%] transition-transform duration-700" />
+            </>
+          )}
+        </Button>
+      </div>
+    </article>
   );
 }
 

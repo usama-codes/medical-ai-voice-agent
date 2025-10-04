@@ -39,7 +39,7 @@ function NewUserDialog() {
 
   const GetHistoryList = async () => {
     const result = await axios.get("/api/session-chat?sessionId=all");
-    console.log(result.data);
+    // console.log(result.data);
     setHistoryList(result.data);
   };
 
@@ -50,10 +50,10 @@ function NewUserDialog() {
       selectedDoctor: selectedDoctor,
     });
 
-    console.log(result.data);
+    // console.log(result.data);
 
     if (result.data?.sessionId) {
-      console.log("Session started with ID:", result.data.sessionId);
+      // console.log("Session started with ID:", result.data.sessionId);
 
       // Navigate to the medical agent page with the sessionId
       router.push(`/dashboard/medical-agent/${result.data.sessionId}`);
@@ -75,7 +75,7 @@ function NewUserDialog() {
         }
       );
 
-      console.log(result.data);
+      // console.log(result.data);
 
       // Validate the response
       if (result.data && Array.isArray(result.data) && result.data.length > 0) {
@@ -108,45 +108,71 @@ function NewUserDialog() {
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className="mt-3"
+          className="shadow-lg hover:shadow-xl"
           disabled={!paidUser && historyList?.length >= 1}
+          aria-label="Start a new medical consultation"
         >
           + Start a Consultation
         </Button>
       </DialogTrigger>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Add Basic Details:</DialogTitle>
+      <DialogContent className="max-w-2xl">
+        <DialogHeader className="space-y-3">
+          <DialogTitle className="text-2xl font-bold text-foreground">
+            {!suggestedDoctors
+              ? "Start Your Consultation"
+              : "Select Your Specialist"}
+          </DialogTitle>
           <DialogDescription asChild>
             {!suggestedDoctors ? (
-              <div>
-                <h2>Add Symptoms</h2>
-                <Textarea
-                  placeholder="e.g. I have a headache and fever..."
-                  className="w-full h-[150px] mt-2 mb-5"
-                  onChange={(e) => setNote(e.target.value)}
-                />
+              <div className="space-y-4">
+                <p className="text-muted-foreground">
+                  Describe your symptoms or health concerns to help us recommend
+                  the right specialist
+                </p>
+                <div>
+                  <label
+                    htmlFor="symptoms"
+                    className="text-sm font-semibold text-foreground mb-2 block"
+                  >
+                    Your Symptoms
+                  </label>
+                  <Textarea
+                    id="symptoms"
+                    placeholder="e.g. I have a headache and fever that started yesterday..."
+                    className="w-full h-[150px] resize-none border-2 focus:border-primary transition-colors"
+                    onChange={(e) => setNote(e.target.value)}
+                    aria-label="Describe your symptoms"
+                  />
+                </div>
               </div>
             ) : (
-              <div>
-                <h2>Select a Doctor</h2>
-                <div className="grid grid-cols-3 gap-5">
+              <div className="space-y-4">
+                <p className="text-muted-foreground">
+                  Based on your symptoms, we recommend these specialists
+                </p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-h-[400px] overflow-y-auto pr-2">
                   {suggestedDoctors.map((doctor, index) => (
                     <SuggestedDoctors
-                      key={index}
+                      key={doctor.id || index}
                       doctorAgent={doctor}
                       setSelectedDoctor={() => setSelectedDoctor(doctor)}
                       selectedDoctor={selectedDoctor}
                     />
                   ))}
+                  \n{" "}
                 </div>
+                \n{" "}
               </div>
             )}
           </DialogDescription>
         </DialogHeader>
-        <DialogFooter>
+        <DialogFooter className="gap-3">
           <DialogClose asChild>
-            <Button variant={"outline"} className="transition cursor-pointer">
+            <Button
+              variant={"outline"}
+              className="transition-all hover:scale-105"
+              aria-label="Cancel consultation"
+            >
               Cancel
             </Button>
           </DialogClose>
@@ -154,26 +180,38 @@ function NewUserDialog() {
             <Button
               disabled={!note || loading}
               onClick={() => OnClickNext()}
-              className="transition cursor-pointer"
+              className="transition-all hover:scale-105 shadow-md"
+              aria-label="Continue to doctor selection"
             >
-              Next{" "}
               {loading ? (
-                <Loader2 className="animate-spin" />
+                <>
+                  <Loader2 className="animate-spin mr-2" aria-hidden="true" />
+                  <span>Processing...</span>
+                </>
               ) : (
-                <ArrowRightIcon />
+                <>
+                  <span>Next</span>
+                  <ArrowRightIcon className="ml-2" aria-hidden="true" />
+                </>
               )}
             </Button>
           ) : (
             <Button
               disabled={!selectedDoctor || loading}
               onClick={() => onStartConsultation()}
-              className="transition cursor-pointer"
+              className="transition-all hover:scale-105 shadow-md"
+              aria-label="Start consultation with selected doctor"
             >
-              Start Consultation
               {loading ? (
-                <Loader2 className="animate-spin" />
+                <>
+                  <Loader2 className="animate-spin mr-2" aria-hidden="true" />
+                  <span>Starting...</span>
+                </>
               ) : (
-                <ArrowRightIcon />
+                <>
+                  <span>Start Consultation</span>
+                  <ArrowRightIcon className="ml-2" aria-hidden="true" />
+                </>
               )}
             </Button>
           )}

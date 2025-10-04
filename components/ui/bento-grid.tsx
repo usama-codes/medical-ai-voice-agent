@@ -8,14 +8,15 @@ export const BentoGrid = ({
   children?: React.ReactNode;
 }) => {
   return (
-    <div
+    <section
       className={cn(
-        "mx-auto grid max-w-7xl grid-cols-1 gap-4 md:auto-rows-[18rem] md:grid-cols-3",
-        className,
+        "mx-auto grid max-w-7xl grid-cols-1 gap-6 md:auto-rows-[18rem] md:grid-cols-3 px-4",
+        className
       )}
+      aria-label="Features overview"
     >
       {children}
-    </div>
+    </section>
   );
 };
 
@@ -33,22 +34,24 @@ export const BentoGridItem = ({
   icon?: React.ReactNode;
 }) => {
   return (
-    <div
+    <article
       className={cn(
-        "group/bento shadow-input row-span-1 flex flex-col justify-between space-y-4 rounded-xl border border-neutral-200 bg-white p-4 transition duration-200 hover:shadow-xl dark:border-white/[0.2] dark:bg-black dark:shadow-none",
-        className,
+        "group/bento row-span-1 flex flex-col justify-between space-y-4 rounded-2xl border-2 border-border bg-card p-6 shadow-lg transition-all duration-300 hover:shadow-2xl hover:scale-[1.02] hover:border-primary/50",
+        className
       )}
     >
-      {header}
-      <div className="transition duration-200 group-hover/bento:translate-x-2">
-        {icon}
-        <div className="mt-2 mb-2 font-sans font-bold text-neutral-600 dark:text-neutral-200">
-          {title}
+      <div className="overflow-hidden rounded-xl">{header}</div>
+      <div className="transition-all duration-300 group-hover/bento:translate-x-2">
+        <div className="flex items-center gap-2 mb-3">
+          {icon}
+          <h3 className="font-sans text-lg font-bold text-foreground">
+            {title}
+          </h3>
         </div>
-        <div className="font-sans text-xs font-normal text-neutral-600 dark:text-neutral-300">
+        <p className="font-sans text-sm font-normal text-muted-foreground leading-relaxed">
           {description}
-        </div>
+        </p>
       </div>
-    </div>
+    </article>
   );
 };

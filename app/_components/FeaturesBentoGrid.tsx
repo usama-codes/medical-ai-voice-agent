@@ -12,7 +12,6 @@ import {
 import { motion } from "motion/react";
 import { BentoGrid, BentoGridItem } from "@/components/ui/bento-grid";
 
-
 export function FeaturesBentoGrid() {
   return (
     <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[20rem]">
@@ -66,7 +65,7 @@ const SkeletonOne = () => {
         variants={variants}
         className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2  items-center space-x-2 bg-white dark:bg-black"
       >
-        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 shrink-0" />
         <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
       </motion.div>
       <motion.div
@@ -74,13 +73,13 @@ const SkeletonOne = () => {
         className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 w-3/4 ml-auto bg-white dark:bg-black"
       >
         <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
-        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 shrink-0" />
       </motion.div>
       <motion.div
         variants={variants}
         className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center space-x-2 bg-white dark:bg-black"
       >
-        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 shrink-0" />
         <div className="w-full bg-gray-100 h-4 rounded-full dark:bg-neutral-900" />
       </motion.div>
     </motion.div>
@@ -147,7 +146,7 @@ const SkeletonThree = () => {
       className="flex flex-1 w-full h-full min-h-[6rem] dark:bg-dot-white/[0.2] rounded-lg bg-dot-black/[0.2] flex-col space-y-2"
       style={{
         background:
-          "linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab)",
+          "linear-gradient(-45deg, #0891b2, #06b6d4, #14b8a6, #10b981)",
         backgroundSize: "400% 400%",
       }}
     >
@@ -290,66 +289,70 @@ const SkeletonFive = () => {
         className="flex flex-row rounded-full border border-neutral-100 dark:border-white/[0.2] p-2 items-center justify-end space-x-2 w-3/4 ml-auto bg-white dark:bg-black"
       >
         <p className="text-xs text-neutral-500">Use PHP.</p>
-        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-pink-500 to-violet-500 shrink-0" />
+        <div className="h-6 w-6 rounded-full bg-gradient-to-r from-cyan-500 to-teal-500 shrink-0" />
       </motion.div>
     </motion.div>
   );
 };
 const items = [
   {
-    title: "AI Content Generation",
+    title: "Voice-Powered Consultations",
     description: (
       <span className="text-sm">
-        Experience the power of AI in generating unique content.
+        Natural voice interactions for seamless medical consultations with AI
+        specialists.
       </span>
     ),
     header: <SkeletonOne />,
     className: "md:col-span-1",
-    icon: <IconClipboardCopy className="h-4 w-4 text-neutral-500" />,
+    icon: <IconClipboardCopy className="h-5 w-5 text-primary" />,
   },
   {
-    title: "Automated Proofreading",
+    title: "Symptom Analysis",
     description: (
       <span className="text-sm">
-        Let AI handle the proofreading of your documents.
+        Advanced AI analyzes your symptoms to recommend the right specialist.
       </span>
     ),
     header: <SkeletonTwo />,
     className: "md:col-span-1",
-    icon: <IconFileBroken className="h-4 w-4 text-neutral-500" />,
+    icon: <IconFileBroken className="h-5 w-5 text-primary" />,
   },
   {
-    title: "Contextual Suggestions",
+    title: "24/7 Availability",
     description: (
       <span className="text-sm">
-        Get AI-powered suggestions based on your writing context.
+        Access medical assistance anytime, anywhere with round-the-clock AI
+        support.
       </span>
     ),
     header: <SkeletonThree />,
     className: "md:col-span-1",
-    icon: <IconSignature className="h-4 w-4 text-neutral-500" />,
+    icon: <IconSignature className="h-5 w-5 text-primary" />,
   },
   {
-    title: "Sentiment Analysis",
+    title: "Personalized Care",
     description: (
       <span className="text-sm">
-        Understand the sentiment of your text with AI analysis.
+        Tailored medical advice based on your health history and current
+        symptoms.
       </span>
     ),
     header: <SkeletonFour />,
     className: "md:col-span-2",
-    icon: <IconTableColumn className="h-4 w-4 text-neutral-500" />,
+    icon: <IconTableColumn className="h-5 w-5 text-primary" />,
   },
 
   {
-    title: "Text Summarization",
+    title: "Automated Scheduling",
     description: (
       <span className="text-sm">
-        Summarize your lengthy documents with AI technology.
+        Effortlessly schedule appointments and receive automated follow-up
+        reminders.
       </span>
     ),
     header: <SkeletonFive />,
     className: "md:col-span-1",
-    icon: <IconBoxAlignRightFilled className="h-4 w-4 text-neutral-500" />,
+    icon: <IconBoxAlignRightFilled className="h-5 w-5 text-primary" />,
   },
 ];

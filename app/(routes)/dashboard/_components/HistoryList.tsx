@@ -18,32 +18,53 @@ function HistoryList() {
 
   const GetHistoryList = async () => {
     const result = await axios.get("/api/session-chat?sessionId=all");
-    console.log(result.data);
+    // console.log(result.data);
     setHistoryList(result.data);
   };
 
   return (
-    <div className="mt-10">
+    <section className="space-y-6" aria-labelledby="history-heading">
       {historyList.length === 0 ? (
-        <div className="flex flex-col items-center justify-center gap-5 p-7 border-dashed rounded-2xl border-2">
+        <div className="flex flex-col items-center justify-center gap-5 p-12 border-dashed rounded-2xl border-2 border-border bg-muted/30 hover:bg-muted/50 transition-colors">
           <Image
             src={"/medical-assistance.png"}
-            alt="empty"
+            alt="No consultations illustration"
             width={150}
             height={150}
+            className="opacity-75"
           />
-          <h2 className="font-bold text-xl mt-2">No Recent Consultations</h2>
-          <p className="text-gray-500">
-            It looks like you haven't consulted any doctors yet.
-          </p>
+          <div className="text-center space-y-2">
+            <h2
+              id="history-heading"
+              className="font-bold text-2xl text-foreground"
+            >
+              No Recent Consultations
+            </h2>
+            <p className="text-muted-foreground max-w-md">
+              It looks like you haven't consulted any doctors yet. Start your
+              first consultation to get personalized medical advice.
+            </p>
+          </div>
           <NewUserDialog />
         </div>
       ) : (
-        <div>
+        <div className="space-y-4">
+          <div className="flex items-center gap-3">
+            <div
+              className="h-8 w-1 bg-primary rounded-full"
+              aria-hidden="true"
+            />
+            <h2
+              id="history-heading"
+              className="font-bold text-2xl md:text-3xl text-foreground"
+            >
+              Consultation History
+            </h2>
+          </div>
           <HistoryTable historyList={historyList} />
         </div>
       )}
-    </div>
+    </section>
   );
 }
 

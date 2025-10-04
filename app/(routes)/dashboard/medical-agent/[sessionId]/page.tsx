@@ -35,15 +35,31 @@ function MedicalAgent() {
   const [liveTranscript, setLiveTranscript] = useState<string>();
   const [messages, setMessages] = useState<message[]>([]);
   const [loading, setLoading] = useState(false);
+  const [callDuration, setCallDuration] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
     sessionId && GetSessionDetails();
   }, [sessionId]);
 
+  // Timer effect for call duration
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    if (callStarted) {
+      interval = setInterval(() => {
+        setCallDuration((prev) => prev + 1);
+      }, 1000);
+    } else {
+      setCallDuration(0);
+    }
+    return () => {
+      if (interval) clearInterval(interval);
+    };
+  }, [callStarted]);
+
   const GetSessionDetails = async () => {
     const res = await axios.get("/api/session-chat?sessionId=" + sessionId);
-    console.log(res.data);
+    // console.log(res.data);
     setSessionDetails(res.data);
   };
 
@@ -65,13 +81,13 @@ function MedicalAgent() {
       setVapiInstance(vapi);
 
       vapi.on("call-start", async () => {
-        console.log("Call started");
+        // console.log("Call started");
         setCallStarted(true);
         setLoading(false);
       });
 
       vapi.on("call-end", () => {
-        console.log("Call ended");
+        // console.log("Call ended");
         setCallStarted(false);
       });
 
@@ -86,7 +102,7 @@ function MedicalAgent() {
         // Only log complete transcripts when role ends, not every partial message
         if (message.type === "transcript") {
           const { role, transcriptType, transcript } = message;
-          console.log(`${message.role}: ${message.transcript}`);
+          // console.log(`${message.role}: ${message.transcript}`);
           if (transcriptType === "partial") {
             setLiveTranscript(transcript);
             setCurrentRole(role);
@@ -100,19 +116,19 @@ function MedicalAgent() {
           }
 
           if (message.type === "response") {
-            console.log("Agent:", message.text);
+            // console.log("Agent:", message.text);
           }
         }
       });
 
       vapi.on("speech-start", () => {
-        console.log("Assistant started speaking");
-        setCurrentRole("assistant");
+        // console.log("Assistant started speaking");
+        setCurrentRole("Assistant");
       });
 
       vapi.on("speech-end", () => {
-        console.log("Assistant stopped speaking");
-        setCurrentRole("user");
+        // console.log("Assistant stopped speaking");
+        setCurrentRole("User");
       });
 
       // Start the call last
@@ -133,7 +149,7 @@ function MedicalAgent() {
       sessionDetails: sessionDetails,
       messages: messages,
     });
-    console.log(result.data);
+    // console.log(result.data);
     return result.data;
   };
 
@@ -170,7 +186,10 @@ function MedicalAgent() {
           />
           {callStarted ? "Connected" : "Not Connected"}
         </h2>
-        <h2 className="font-bold text-xl text-gray-400">00:00</h2>
+        <h2 className="font-bold text-xl text-gray-400">
+          {String(Math.floor(callDuration / 60)).padStart(2, "0")}:
+          {String(callDuration % 60).padStart(2, "0")}
+        </h2>
       </div>
       {sessionDetails && (
         <div className="flex items-center flex-col mt-10">

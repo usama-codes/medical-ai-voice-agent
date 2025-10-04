@@ -11,7 +11,7 @@ export const Doctors = [
     {
         id: 2,
         specialist: "Pediatrician",
-        description: "Expert in children's health, from babies to teens.",
+        description: "Expert in children's general health, from babies to teens.",
         image: "/doctor2.png",
         agentPrompt: "You are a kind Pediatrician AI. Ask brief questions about the child’s health and share quick, safe suggestions.",
         voiceId: "chris",
@@ -56,7 +56,7 @@ export const Doctors = [
     {
         id: 7,
         specialist: "ENT Specialist",
-        description: "Handles ear, nose, and throat-related problems.",
+        description: "Handles ear, nose, and throat-related problems and infections.",
         image: "/doctor7.png",
         agentPrompt: "You are a friendly ENT AI. Ask quickly about ENT symptoms and give simple, clear suggestions.",
         voiceId: "ayla",
